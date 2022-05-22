@@ -9,24 +9,26 @@ import { CRUDPost } from './pages/crud/CRUDPosts';
 function App() {
 
   return (
+    <>
     <Router>
-      <Route path="/" exact>
+      <Route path="/Projeto-TIAW" exact>
         <Login />
       </Route>
-      <Route path="/home">
+      <Route path="/Projeto-TIAW/home">
         <Navbar />
         <Home />
       </Route>
-      <Route path="/crud/comunidade" exact>
+      <Route path="/Projeto-TIAW/crud/comunidade" exact>
         <CRUDComunidade />
       </Route>
-      <Route path="/crud/users" exact>
+      <Route path="/Projeto-TIAW/crud/users" exact>
         <CRUDUsers />
       </Route>
-      <Route path="/crud/posts" exact>
+      <Route path="/Projeto-TIAW/crud/posts" exact>
         <CRUDPost />
       </Route>
     </Router>
+    </>
   );
 }
 
