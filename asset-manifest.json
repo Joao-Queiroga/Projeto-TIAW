@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Projeto-TIAW/static/css/main.30d98bba.css",
+    "main.js": "/Projeto-TIAW/static/js/main.f69510f1.js",
+    "static/js/787.f733ab27.chunk.js": "/Projeto-TIAW/static/js/787.f733ab27.chunk.js",
+    "static/media/google-icon.svg": "/Projeto-TIAW/static/media/google-icon.df15d8e5458213ab411f1d2e97ab8c67.svg",
+    "index.html": "/Projeto-TIAW/index.html",
+    "main.30d98bba.css.map": "/Projeto-TIAW/static/css/main.30d98bba.css.map",
+    "main.f69510f1.js.map": "/Projeto-TIAW/static/js/main.f69510f1.js.map",
+    "787.f733ab27.chunk.js.map": "/Projeto-TIAW/static/js/787.f733ab27.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.30d98bba.css",
+    "static/js/main.f69510f1.js"
+  ]
+}
