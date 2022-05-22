@@ -13,7 +13,7 @@ export function Login() {
 //      await signInWithGoogle();
 //    }
 
-    history.push("/home")
+    history.push("/Projeto-TIAW/home")
   }
 
   return (
