@@ -7,6 +7,7 @@ export function CRUDPost() {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
+  const [idDelete, setIdDelete] = useState();
   const [idUsuario, setIdUsuario] = useState();
   const [conteudo, setConteudo] = useState();
 
@@ -52,6 +53,18 @@ export function CRUDPost() {
     window.location.reload();
   }
 
+  async function DeletaPost(event) {
+    event.preventDefault();
+
+    if (idDelete.trim() === '')
+      return
+
+    await db.collection("posts").doc(idDelete).delete().then(() => {
+      console.log("Deletado com sucesso")
+    })
+    window.location.reload();
+  }
+
   return(
     <div className="container">
       <h1>Comunidades</h1>
@@ -67,17 +80,26 @@ export function CRUDPost() {
           <CorpoTabela />
         </tbody>
       </table>
-      <h1>Adiciona comunidade</h1>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+      <h1>Adiciona Posts</h1>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
       <form className="container" onSubmit={NovoPost}>
-        <input type="text" className="form-control"
+        <input type="text" className="form-control my-1"
           placeholder="Digite o id do criador do post"
           onChange={event => setConteudo(event.target.value)}
           value={conteudo}/>
-        <input type="text" className="form-control"
+        <input type="text" className="form-control my-1"
           placeholder="digite o conteúdo do post"
           onChange={event => setIdUsuario(event.target.value)}
           value={idUsuario}/>
       <button type="submit" className="btn btn-primary">Postar</button>
+      </form>
+      <h1>Deleta Posts</h1>
+      <form className="container" onSubmit={DeletaPost}>
+        <input type="text" className="form-control my-1"
+          placeholder="Digite o id do Post"
+          name="id_delete"
+          onChange={event => setIdDelete(event.target.value)}
+          value={idDelete}/>
+      <button type="submit" className="btn btn-primary my-1">Criar Nova Comunidade</button>
       </form>
     </div>
   );

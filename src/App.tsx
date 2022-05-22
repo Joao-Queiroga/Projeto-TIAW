@@ -5,12 +5,16 @@ import { Navbar } from './components/Navbar';
 import { CRUDComunidade } from './pages/crud/CRUDComunidade';
 import { CRUDUsers } from './pages/crud/CRUDUsers';
 import { CRUDPost } from './pages/crud/CRUDPosts';
+import { Menu } from './pages/Menu';
 
 function App() {
 
   return (
     <Router>
       <Route path="/Projeto-TIAW" exact>
+        <Menu />
+      </Route>
+      <Route path="/Projeto-TIAW/login" exact>
         <Login />
       </Route>
       <Route path="/Projeto-TIAW/home">

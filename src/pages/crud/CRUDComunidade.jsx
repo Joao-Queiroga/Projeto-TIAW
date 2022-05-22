@@ -7,8 +7,10 @@ export function CRUDComunidade() {
   const [loading, setLoading] = useState(true);
   const [comunidades, setComunidades] = useState([]);
 
+  const [idDelete, setIdDelete] = useState();
   const [idCriador, setIdCriador] = useState();
   const [nome, setNome] = useState();
+  const [idUsuarios, setIdUsuarios] = useState([]);
 
   useEffect(() => {
     const docs = [];
@@ -37,6 +39,18 @@ export function CRUDComunidade() {
         }
       </>
     )
+  }
+
+  async function DeletaComunidade(event) {
+    event.preventDefault();
+
+    if (idDelete.trim() === '')
+      return
+
+    await db.collection("comunidades").doc(idDelete).delete().then(() => {
+      console.log("Deletado com sucesso")
+    })
+    window.location.reload();
   }
 
   async function NovaComunidade(event) {
@@ -70,17 +84,26 @@ export function CRUDComunidade() {
       </table>
       <h1>Adiciona comunidade</h1>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
       <form className="container" onSubmit={NovaComunidade}>
-        <input type="text" className="form-control"
+        <input type="text" className="form-control my-1"
           placeholder="Digite o nome da comunidade"
           name="nome"
           onChange={event => setNome(event.target.value)}
           value={nome}/>
-        <input type="text" className="form-control"
+        <input type="text" className="form-control my-1"
           placeholder="Digite o id do criador"
           name="id_criador"
           onChange={event => setIdCriador(event.target.value)}
           value={idCriador}/>
-      <button type="submit" className="btn btn-primary">Criar Nova Comunidade</button>
+      <button type="submit" className="btn btn-primary my-1">Criar Nova Comunidade</button>
+      </form>
+      <h1>Deleta comunidade</h1>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+      <form className="container" onSubmit={DeletaComunidade}>
+        <input type="text" className="form-control my-1"
+          placeholder="Digite o id da Comunidade"
+          name="id_delete"
+          onChange={event => setIdDelete(event.target.value)}
+          value={idDelete}/>
+      <button type="submit" className="btn btn-primary my-1">Criar Nova Comunidade</button>
       </form>
     </div>
   );
