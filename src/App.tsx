@@ -14,17 +14,17 @@ function App() {
       <Route path="/Projeto-TIAW" exact>
         <Login />
       </Route>
-      <Route path="/Projeto-TIAW/home">
+      <Route path="/home">
         <Navbar />
         <Home />
       </Route>
-      <Route path="/Projeto-TIAW/crud/comunidade" exact>
+      <Route path="/crud/comunidade" exact>
         <CRUDComunidade />
       </Route>
-      <Route path="/Projeto-TIAW/crud/users" exact>
+      <Route path="/crud/users" exact>
         <CRUDUsers />
       </Route>
-      <Route path="/Projeto-TIAW/crud/posts" exact>
+      <Route path="/crud/posts" exact>
         <CRUDPost />
       </Route>
     </Router>
