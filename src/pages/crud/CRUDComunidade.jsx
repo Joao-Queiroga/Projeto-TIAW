@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { db } from '../../services/firebase';
 
 
 export function CRUDComunidade() {
+  const history = useHistory();
 
   const [loading, setLoading] = useState(true);
   const [comunidades, setComunidades] = useState([]);
 
   const [idDelete, setIdDelete] = useState();
+  const [idUpdate, setIdUpdate] = useState();
   const [idCriador, setIdCriador] = useState();
   const [nome, setNome] = useState();
-  const [idUsuarios, setIdUsuarios] = useState([]);
+//  const [idUsuarios, setIdUsuarios] = useState([]);
 
   useEffect(() => {
     const docs = [];
@@ -26,7 +29,6 @@ export function CRUDComunidade() {
   function CorpoTabela() {
     if (loading)
       return <h1>Loading...</h1>
-    console.log(comunidades);
     return (
       <>
         {comunidades.map(comunidade => (
@@ -39,6 +41,15 @@ export function CRUDComunidade() {
         }
       </>
     )
+  }
+
+  function AlteraComunidade(event) {
+    event.preventDefault();
+
+    if (idUpdate.trim() === '')
+      return;
+
+    history.push("/Projeto-TIAW/crud/comunidade/" + idUpdate);
   }
 
   async function DeletaComunidade(event) {
@@ -69,6 +80,7 @@ export function CRUDComunidade() {
 
   return(
     <div className="container">
+      <Link to="/Projeto-TIAW" className="btn btn-primary">Menu</Link>
       <h1>Comunidades</h1>
       <table className="table table-hover">
         <thead>
@@ -86,24 +98,29 @@ export function CRUDComunidade() {
       <form className="container" onSubmit={NovaComunidade}>
         <input type="text" className="form-control my-1"
           placeholder="Digite o nome da comunidade"
-          name="nome"
           onChange={event => setNome(event.target.value)}
           value={nome}/>
         <input type="text" className="form-control my-1"
           placeholder="Digite o id do criador"
-          name="id_criador"
           onChange={event => setIdCriador(event.target.value)}
           value={idCriador}/>
       <button type="submit" className="btn btn-primary my-1">Criar Nova Comunidade</button>
+      </form>
+      <h1>Edita Comunidade</h1>
+      <form className="container" onSubmit={AlteraComunidade}>
+        <input type="text" className="form-control my-1"
+          placeholder="Digite o id da Comunidade"
+          onChange={event => setIdUpdate(event.target.value)}
+          value={idUpdate}/>
+        <button type="submit" className="btn btn-primary my-1">Alterar Comunidade</button>
       </form>
       <h1>Deleta comunidade</h1>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
       <form className="container" onSubmit={DeletaComunidade}>
         <input type="text" className="form-control my-1"
           placeholder="Digite o id da Comunidade"
-          name="id_delete"
           onChange={event => setIdDelete(event.target.value)}
           value={idDelete}/>
-      <button type="submit" className="btn btn-primary my-1">Criar Nova Comunidade</button>
+      <button type="submit" className="btn btn-primary my-1">Deletar Comunidade</button>
       </form>
     </div>
   );

@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { db } from '../../services/firebase';
 
 
 export function CRUDPost() {
-
+  const history = useHistory()
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
   const [idDelete, setIdDelete] = useState();
+  const [idUpdate, setIdUpdate] = useState();
   const [idUsuario, setIdUsuario] = useState();
   const [conteudo, setConteudo] = useState();
 
@@ -31,8 +33,8 @@ export function CRUDPost() {
         {posts.map(post => (
             <tr>
               <th scope="row">{post.id}</th>
-              <td>{post.id_usuario}</td>
               <td>{post.conteudo}</td>
+              <td>{post.id_usuario}</td>
             </tr>
           ))
         }
@@ -53,6 +55,15 @@ export function CRUDPost() {
     window.location.reload();
   }
 
+  function AlteraPost(event) {
+    event.preventDefault();
+
+    if (idUpdate.trim() === '')
+      return;
+
+    history.push("/Projeto-TIAW/crud/posts/" + idUpdate);
+  }
+
   async function DeletaPost(event) {
     event.preventDefault();
 
@@ -67,6 +78,7 @@ export function CRUDPost() {
 
   return(
     <div className="container">
+      <Link to="/Projeto-TIAW" className="btn btn-primary">Menu</Link>
       <h1>Comunidades</h1>
       <table className="table table-hover">
         <thead>
@@ -84,13 +96,21 @@ export function CRUDPost() {
       <form className="container" onSubmit={NovoPost}>
         <input type="text" className="form-control my-1"
           placeholder="Digite o id do criador do post"
-          onChange={event => setConteudo(event.target.value)}
-          value={conteudo}/>
-        <input type="text" className="form-control my-1"
-          placeholder="digite o conteúdo do post"
           onChange={event => setIdUsuario(event.target.value)}
           value={idUsuario}/>
+        <input type="text" className="form-control my-1"
+          placeholder="digite o conteúdo do post"
+          onChange={event => setConteudo(event.target.value)}
+          value={conteudo}/>
       <button type="submit" className="btn btn-primary">Postar</button>
+      </form>
+      <h1>Edita Post</h1>
+      <form className="container" onSubmit={AlteraPost}>
+        <input type="text" className="form-control my-1"
+          placeholder="Digite o id do Usuário"
+          onChange={event => setIdUpdate(event.target.value)}
+          value={idUpdate}/>
+        <button type="submit" className="btn btn-primary my-1">Editar Post</button>
       </form>
       <h1>Deleta Posts</h1>
       <form className="container" onSubmit={DeletaPost}>
@@ -99,7 +119,7 @@ export function CRUDPost() {
           name="id_delete"
           onChange={event => setIdDelete(event.target.value)}
           value={idDelete}/>
-      <button type="submit" className="btn btn-primary my-1">Criar Nova Comunidade</button>
+      <button type="submit" className="btn btn-primary my-1">Deletar Post</button>
       </form>
     </div>
   );
