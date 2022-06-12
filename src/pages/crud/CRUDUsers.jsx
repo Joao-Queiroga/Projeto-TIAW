@@ -8,10 +8,7 @@ export function CRUDUsers() {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
 
-  const [uid, setUid] = useState();
   const [nome, setNome] = useState();
-  const [idDelete, setIdDelete] = useState();
-  const [idUpdate, setIdUpdate] = useState();
 
   useEffect(() => {
     const docs = [];
@@ -24,23 +21,6 @@ export function CRUDUsers() {
     });
   }, [loading]);
 
-  function CorpoTabela() {
-    if (loading)
-      return <h1>Loading...</h1>
-    console.log(users);
-    return (
-      <>
-        {users.map(user => (
-            <tr>
-              <th scope="row">{user.id}</th>
-              <td>{user.nome}</td>
-            </tr>
-          ))
-        }
-      </>
-    )
-  }
-
   async function NovoUsuario(event) {
     event.preventDefault();
 
@@ -49,35 +29,43 @@ export function CRUDUsers() {
 
     await db.collection("users").add({
       nome: nome,
+      id_comunidades: [],
     })
-    window.location.reload();
+    setLoading(true);
   }
 
-  function AlteraUser(event) {
-    event.preventDefault();
-
-    if (idUpdate.trim() === '')
-      return;
-
-    history.push("/Projeto-TIAW/crud/users/" + idUpdate);
+  function EditUser(id) {
+    history.push("/Projeto-TIAW/crud/users/" + id);
   }
 
-  async function DeletaUser(event) {
-    event.preventDefault();
-
-    if (idDelete.trim() === '')
-      return
-
-    await db.collection("users").doc(idDelete).delete().then(() => {
+  async function DeleteUser(id) {
+    await db.collection("users").doc(id).delete().then(() => {
       console.log("Deletado com sucesso")
     })
-    window.location.reload();
+    setLoading(true);
   }
 
-  return(
-    <div className="container">
-      <Link to="/Projeto-TIAW" className="btn btn-primary">Menu</Link>
-      <h1>Usuarios</h1>
+  function Tabela() {
+    function CorpoTabela() {
+      if (loading)
+        return <h1>Loading...</h1>
+      console.log(users);
+      return (
+        <>
+          {users.map(user => (
+              <tr>
+                <th scope="row">{user.id}</th>
+                <td>{user.nome}</td>
+                <td><button className="btn btn-secondary" onClick={() => EditUser(user.id)}>Editar</button></td>
+                <td><button className="btn btn-danger" onClick={() => DeleteUser(user.id)}>Remover</button></td>
+              </tr>
+            ))
+          }
+        </>
+      )
+    }
+
+    return (
       <table className="table table-hover">
         <thead>
           <tr>
@@ -89,6 +77,14 @@ export function CRUDUsers() {
           <CorpoTabela />
         </tbody>
       </table>
+    )
+  }
+
+  return(
+    <div className="container">
+      <Link to="/Projeto-TIAW" className="btn btn-primary">Menu</Link>
+      <h1>Usuarios</h1>
+      <Tabela />
       <h1>Adiciona Usuário</h1>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
       <form className="container" onSubmit={NovoUsuario}>
         <input type="text" className="form-control my-1"
@@ -97,23 +93,6 @@ export function CRUDUsers() {
           onChange={event => setNome(event.target.value)}
           value={nome}/>
       <button type="submit" className="btn btn-primary my-1">Criar Novo usuário</button>
-      </form>
-      <h1>Edita Usuário</h1>
-      <form className="container" onSubmit={AlteraUser}>
-        <input type="text" className="form-control my-1"
-          placeholder="Digite o id do Usuário"
-          onChange={event => setIdUpdate(event.target.value)}
-          value={idUpdate}/>
-        <button type="submit" className="btn btn-primary my-1">Editar Post</button>
-      </form>
-      <h1>Deleta Usuário</h1>
-      <form className="container" onSubmit={DeletaUser}>
-        <input type="text" className="form-control my-1"
-          placeholder="Digite o id do Post"
-          name="id_delete"
-          onChange={event => setIdDelete(event.target.value)}
-          value={idDelete}/>
-      <button type="submit" className="btn btn-primary my-1">Deletar Post</button>
       </form>
     </div>
   );

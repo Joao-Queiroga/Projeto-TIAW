@@ -3,15 +3,16 @@ import { Button } from '../components/Button'
 import googleIcon from '../assets/imgs/google-icon.svg';
 
 import '../styles/auth.scss'
+import { useAuth } from '../hooks/useAuth';
 
 export function Login() {
   const history = useHistory();
-//  const { user, signInWithGoogle } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
 
-  function HandleLogin() {
-//    if(!user) {
-//      await signInWithGoogle();
-//    }
+  async function HandleLogin() {
+    if(!user) {
+      await signInWithGoogle();
+    }
 
     history.push("/Projeto-TIAW/home")
   }

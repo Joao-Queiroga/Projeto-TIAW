@@ -1,0 +1,32 @@
+{
+    "comunidades": [
+        {
+            "id": "id",
+            "nome": "nome"
+            "id_admin": "id"
+            "id_usuarios": ["id1", "id2"]
+        }
+    ],
+    "posts": [
+        {
+            "id": "id",
+            "id_usuario": "id",
+            "conteudo": "abc",
+        }
+    ],
+    "comentarios": [
+        {
+            "id": "id",
+            "id_usuario": "id",
+            "id_post": "id",
+            "conteudo": "abc",
+        },
+    ],
+    "usuarios": [
+        {
+            "id": "abc",
+            "nome": "abc",
+            "comunidades": ["id1", "id2"],
+        }
+    ],
+}
